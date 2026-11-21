@@ -3,7 +3,7 @@ Used car prices: should the dealer buy this car?
 
 Reproduces every number and chart for the slides.
 Run:  python analysis.py
-Outputs go to output/ (results.txt, charts as PNG, CSVs of predictions and auction decisions).
+Outputs are written to this folder (results.txt, charts as PNG, CSVs of predictions and auction decisions).
 """
 
 import numpy as np
@@ -36,8 +36,8 @@ def rmse(y, yhat):
 
 
 # ---------------------------------------------------------------- 1. Data
-sales = pd.read_csv("data/used_car_sales.csv")
-auction = pd.read_csv("data/auction_lots.csv")
+sales = pd.read_csv("used_car_sales.csv")
+auction = pd.read_csv("auction_lots.csv")
 for df in (sales, auction):
     df["Accident"] = (df["Accident"].str.lower() == "yes").astype(int)
 
@@ -107,7 +107,7 @@ pd.DataFrame({
     "Actual_Sale_Price": test["Sale_Price"],
     "Baseline_Pred": test_base,
     "v1_Pred": test_v1.round(0),
-}).to_csv("output/test_predictions.csv")
+}).to_csv("test_predictions.csv")
 
 # ---------------------------------------------------------------- 4. Decision
 def predict_price(car: dict) -> float:
@@ -134,7 +134,7 @@ auction["Baseline_Decision"] = [decide_baseline(r, p) for r, p in
 auction["v1_Decision"] = [decide(r, p) for r, p in
                           zip(auction[FEATURES].to_dict("records"), auction["Auction_Price"])]
 auction["Profit_If_Bought"] = auction["Later_Sale_Price"] - auction["Auction_Price"] - PREP_COST
-auction.round(0).to_csv("output/auction_decisions.csv", index=False)
+auction.round(0).to_csv("auction_decisions.csv", index=False)
 
 log("=== DECISION RULE ON THE 40 AUCTION LOTS ===")
 summary = {}
@@ -174,7 +174,7 @@ ax.yaxis.set_major_formatter(matplotlib.ticker.StrMethodFormatter("{x:,.0f}"))
 ax.set_title("Predicted vs actual sale price, 72 test cars")
 ax.legend(frameon=False, loc="upper left")
 fig.tight_layout()
-fig.savefig("output/pred_vs_actual.png", dpi=200)
+fig.savefig("pred_vs_actual.png", dpi=200)
 
 fig, ax = plt.subplots(figsize=(7, 4.5))
 names = list(summary)
@@ -192,7 +192,7 @@ ax.set_ylabel("Total profit on 40 auction lots")
 ax.set_title("Profit from each buying rule")
 ax.margins(y=0.25)
 fig.tight_layout()
-fig.savefig("output/auction_profit.png", dpi=200)
+fig.savefig("auction_profit.png", dpi=200)
 
-with open("output/results.txt", "w") as f:
+with open("results.txt", "w") as f:
     f.write("\n".join(lines) + "\n")

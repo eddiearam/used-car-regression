@@ -9,20 +9,20 @@ pip install -r requirements.txt
 python analysis.py
 ```
 
-Every number and chart on the slides is written to `output/` by that one script.
+Every number and chart on the slides is written to this same folder by that one script.
 
 ## Files
 
 | Path | What it is |
 |---|---|
 | `analysis.py` | The full analysis: data split, model fitting, test-set evaluation, decision rule, charts |
-| `data/used_car_sales.csv` | 240 cars sold on the lot in the last year (used to fit and test the model) |
-| `data/auction_lots.csv` | 40 auction lots (used only to test the buying rule) |
-| `output/results.txt` | Full regression output and every number on the slides |
-| `output/pred_vs_actual.png` | Predicted vs actual sale price on the 72 test cars, baseline vs v1 |
-| `output/auction_profit.png` | Total profit on the 40 auction lots, baseline rule vs v1 rule |
-| `output/test_predictions.csv` | Baseline and v1 prediction for each test car |
-| `output/auction_decisions.csv` | Buy/pass from each rule and profit for every auction lot |
+| `used_car_sales.csv` | 240 cars sold on the lot in the last year (used to fit and test the model) |
+| `auction_lots.csv` | 40 auction lots (used only to test the buying rule) |
+| `results.txt` | Full regression output and every number on the slides |
+| `pred_vs_actual.png` | Predicted vs actual sale price on the 72 test cars, baseline vs v1 |
+| `auction_profit.png` | Total profit on the 40 auction lots, baseline rule vs v1 rule |
+| `test_predictions.csv` | Baseline and v1 prediction for each test car |
+| `auction_decisions.csv` | Buy/pass from each rule and profit for every auction lot |
 
 ## Method
 
