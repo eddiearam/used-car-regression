@@ -9,8 +9,8 @@ Random 70/30 split (seed=42): train = 168, test = 72
 Dep. Variable:             Sale_Price   R-squared:                       0.873
 Model:                            OLS   Adj. R-squared:                  0.869
 Method:                 Least Squares   F-statistic:                     222.7
-Date:                Fri, 20 Nov 2026   Prob (F-statistic):           1.19e-70
-Time:                        17:58:42   Log-Likelihood:                -1559.5
+Date:                Sat, 21 Nov 2026   Prob (F-statistic):           1.19e-70
+Time:                        13:50:29   Log-Likelihood:                -1559.5
 No. Observations:                 168   AIC:                             3131.
 Df Residuals:                     162   BIC:                             3150.
 Df Model:                           5                                         
@@ -44,8 +44,8 @@ Features with p > 0.05: ['Num_Owners']
 Dep. Variable:             Sale_Price   R-squared:                       0.873
 Model:                            OLS   Adj. R-squared:                  0.870
 Method:                 Least Squares   F-statistic:                     280.0
-Date:                Fri, 20 Nov 2026   Prob (F-statistic):           6.78e-72
-Time:                        17:58:42   Log-Likelihood:                -1559.5
+Date:                Sat, 21 Nov 2026   Prob (F-statistic):           6.78e-72
+Time:                        13:50:29   Log-Likelihood:                -1559.5
 No. Observations:                 168   AIC:                             3129.
 Df Residuals:                     163   BIC:                             3145.
 Df Model:                           4                                         
@@ -88,6 +88,7 @@ Baseline prediction (training average): $25,851 for every car
                R^2    RMSE ($)
 Baseline    -0.014       6,494
 v1           0.823       2,716
+v1 cuts typical error vs baseline by 58%
 
 === DECISION RULE ON THE 40 AUCTION LOTS ===
             Bought  Lost money  Total profit ($)
