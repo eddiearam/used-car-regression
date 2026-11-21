@@ -1,0 +1,101 @@
+=== DATA ===
+used_car_sales.csv: 240 cars sold in the last year
+auction_lots.csv: 40 auction lots (held out, used only to test the decision rule)
+Random 70/30 split (seed=42): train = 168, test = 72
+
+=== MODEL A: all five features (training cars) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             Sale_Price   R-squared:                       0.873
+Model:                            OLS   Adj. R-squared:                  0.869
+Method:                 Least Squares   F-statistic:                     222.7
+Date:                Fri, 20 Nov 2026   Prob (F-statistic):           1.19e-70
+Time:                        17:58:42   Log-Likelihood:                -1559.5
+No. Observations:                 168   AIC:                             3131.
+Df Residuals:                     162   BIC:                             3150.
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const        2.17e+04   1093.279     19.847      0.000    1.95e+04    2.39e+04
+Mileage_K    -78.5928     13.879     -5.663      0.000    -105.999     -51.187
+Age_Years  -1300.6404    185.074     -7.028      0.000   -1666.110    -935.171
+Horsepower    75.0158      4.747     15.801      0.000      65.641      84.391
+Accident   -2171.7835    511.560     -4.245      0.000   -3181.970   -1161.597
+Num_Owners    62.9248    370.489      0.170      0.865    -668.686     794.535
+==============================================================================
+Omnibus:                        0.977   Durbin-Watson:                   2.012
+Prob(Omnibus):                  0.614   Jarque-Bera (JB):                0.634
+Skew:                          -0.112   Prob(JB):                        0.728
+Kurtosis:                       3.201   Cond. No.                     1.14e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.14e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+
+Features with p > 0.05: ['Num_Owners']
+
+=== MODEL B: without Num_Owners ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             Sale_Price   R-squared:                       0.873
+Model:                            OLS   Adj. R-squared:                  0.870
+Method:                 Least Squares   F-statistic:                     280.0
+Date:                Fri, 20 Nov 2026   Prob (F-statistic):           6.78e-72
+Time:                        17:58:42   Log-Likelihood:                -1559.5
+No. Observations:                 168   AIC:                             3129.
+Df Residuals:                     163   BIC:                             3145.
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const       2.176e+04   1023.723     21.258      0.000    1.97e+04    2.38e+04
+Mileage_K    -78.1533     13.595     -5.749      0.000    -104.997     -51.309
+Age_Years  -1291.6311    176.781     -7.306      0.000   -1640.707    -942.555
+Horsepower    75.0204      4.733     15.850      0.000      65.674      84.367
+Accident   -2176.6377    509.238     -4.274      0.000   -3182.191   -1171.085
+==============================================================================
+Omnibus:                        0.917   Durbin-Watson:                   2.003
+Prob(Omnibus):                  0.632   Jarque-Bera (JB):                0.585
+Skew:                          -0.109   Prob(JB):                        0.746
+Kurtosis:                       3.190   Cond. No.                     1.07e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.07e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+
+Adjusted R^2  all features: 0.8691   reduced: 0.8698
+
+=== v1 (model handed over) ===
+Features: ['Mileage_K', 'Age_Years', 'Horsepower', 'Accident']
+Dropped: ['Num_Owners']
+Training R^2: 0.8730   Adjusted R^2: 0.8698
+Coefficients (dollars of sale price per unit), p-values:
+  const            21,762.4   p = 7.4e-49
+  Mileage_K           -78.2   p = 4.3e-08
+  Age_Years        -1,291.6   p = 1.2e-11
+  Horsepower           75.0   p = 7.8e-35
+  Accident         -2,176.6   p = 3.3e-05
+
+=== FIT ON THE 72 TEST CARS (never seen in fitting) ===
+Baseline prediction (training average): $25,851 for every car
+               R^2    RMSE ($)
+Baseline    -0.014       6,494
+v1           0.823       2,716
+
+=== DECISION RULE ON THE 40 AUCTION LOTS ===
+            Bought  Lost money  Total profit ($)
+Baseline        14          10            -6,000
+v1              17           6            15,800
+Difference in profit (v1 - baseline): $21,800
+
+Lots bought by v1: 5, 8, 12, 14, 16, 18, 19, 20, 22, 25, 26, 27, 28, 31, 32, 37, 39
+Lots bought by baseline: 1, 5, 8, 10, 16, 20, 22, 24, 25, 27, 30, 32, 36, 37
+
+Example: decide(lot 16 features, $16,100) -> buy
